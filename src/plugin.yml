@@ -1,0 +1,10 @@
+name: RealAdminTools
+main: fr.crafter.tickleman.RealAdminTools.RealAdminToolsPlugin
+version: 0.01
+website: http://plugins.crafter.fr/tickleman/RealAdminTools/
+authors:
+  - tickleman
+commands:
+  entities:
+    description: entities summary
+    usage: /<command> [detail]
