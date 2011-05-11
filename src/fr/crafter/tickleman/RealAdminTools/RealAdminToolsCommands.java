@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -19,9 +20,8 @@ public class RealAdminToolsCommands
 		RealAdminToolsPlugin plugin,
 		CommandSender sender, Command cmd, String commandLabel, String[] args
 	) {
-		if (sender instanceof Player) {
-			Player player = (Player)sender;
-			if (player.isOp()) {
+		if ((sender instanceof Player) || (sender instanceof ConsoleCommandSender)) {
+			if (sender instanceof ConsoleCommandSender || ((Player)sender).isOp()) {
 				String command = cmd.getName().toLowerCase(); 
 				if (command.equals("entities")) {
 					String subCommand = args.length > 0 ? args[0].toLowerCase() : "";
@@ -31,10 +31,10 @@ public class RealAdminToolsCommands
 						);
 						writer.write("#class,id,itemTypeId,world,x,y,z\n");
 				    for (World world : plugin.getServer().getWorlds()) {
-				    	player.sendMessage(world.getName() + " :");
-				    	player.sendMessage("- " + world.getEntities().size() + " entities");
-				    	player.sendMessage("- " + world.getLivingEntities().size() + " living entities");
-				    	player.sendMessage("- " + world.getPlayers().size() + " players");
+				    	sender.sendMessage(world.getName() + " :");
+				    	sender.sendMessage("- " + world.getEntities().size() + " entities");
+				    	sender.sendMessage("- " + world.getLivingEntities().size() + " living entities");
+				    	sender.sendMessage("- " + world.getPlayers().size() + " players");
 				    	for (Entity entity : world.getEntities()) {
 				    		Item item = (entity instanceof Item ? (Item)entity : null);
 				    		writer.write(
