@@ -103,6 +103,7 @@ public class RealAdminCommandConfig
 	//-------------------------------------------------------------------------- displayOptionsValues
 	static void displayOptionsValues(RealAdminToolsPlugin plugin, CommandSender sender)
 	{
+		sender.sendMessage("server.properties configuration file content :");
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("server.properties"));
 			String buffer;

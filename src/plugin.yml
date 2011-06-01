@@ -1,13 +1,16 @@
 name: RealAdminTools
 main: fr.crafter.tickleman.RealAdminTools.RealAdminToolsPlugin
-version: 0.04
+version: 0.05
 website: http://plugins.crafter.fr/tickleman/RealAdminTools/
 authors:
   - tickleman
 commands:
   config:
     description: change configuration options from server.properties
-    usage: /<command> <option> <value>
+    usage: /<command> [<option> [<value>]]
   entities:
     description: entities summary
     usage: /<command> [detail]
+  ops:
+    description: display operators list
+    usage: /<command>
