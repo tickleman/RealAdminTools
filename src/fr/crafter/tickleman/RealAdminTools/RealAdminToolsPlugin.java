@@ -12,7 +12,7 @@ public class RealAdminToolsPlugin extends RealPlugin
 	//-------------------------------------------------------------------------- RealTeleporterPlugin
 	public RealAdminToolsPlugin()
 	{
-		super("tickleman", "RealAdminTools", "0.03");
+		super("tickleman", "RealAdminTools", "0.04");
 	}
 
 	//------------------------------------------------------------------------------- onPlayerCommand
