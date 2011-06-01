@@ -27,6 +27,7 @@ public class RealAdminToolsCommands
 				}
 				if (command.equals("ops")) {
 					RealAdminCommandOps.command(plugin, sender, args);
+					return true;
 				}
 			}
 		}
