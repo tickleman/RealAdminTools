@@ -29,6 +29,9 @@ public class RealAdminToolsCommands
 					RealAdminCommandOps.command(plugin, sender, args);
 					return true;
 				}
+				if (command.equals("tasks")) {
+					RealAdminCommandTasks.command(plugin, sender, args);
+				}
 			}
 		}
 		return false;

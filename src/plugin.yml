@@ -14,3 +14,6 @@ commands:
   ops:
     description: display operators list
     usage: /<command>
+  tasks:
+    description: display tasks list
+    usage: /<command>
