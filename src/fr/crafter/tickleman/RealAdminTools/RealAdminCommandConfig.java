@@ -38,7 +38,7 @@ public class RealAdminCommandConfig
 			}
 			reader.close();
 		} catch (Exception e) {
-			plugin.log.severe("Could not read server.properties file");
+			plugin.getLog().severe("Could not read server.properties file");
 			sender.sendMessage("§cCould not read server.properties file");
 			bufferOut = "";
 		}
@@ -55,7 +55,7 @@ public class RealAdminCommandConfig
 						"§3server.properties changed : use /reload command to load the new configuration"
 					);
 				} catch (Exception e) {
-					plugin.log.severe("Could not write server.properties file");
+					plugin.getLog().severe("Could not write server.properties file");
 					sender.sendMessage("§cCould not write server.properties file");
 				}
 			} else {
@@ -95,7 +95,7 @@ public class RealAdminCommandConfig
 			}
 			reader.close();
 		} catch (Exception e) {
-			plugin.log.severe("Could not read server.properties file");
+			plugin.getLog().severe("Could not read server.properties file");
 			sender.sendMessage("§cCould not read server.properties file");
 		}
 	}
@@ -114,7 +114,7 @@ public class RealAdminCommandConfig
 			}
 			reader.close();
 		} catch (Exception e) {
-			plugin.log.severe("Could not read server.properties file");
+			plugin.getLog().severe("Could not read server.properties file");
 			sender.sendMessage("§cCould not read server.properties file");
 		}
 	}

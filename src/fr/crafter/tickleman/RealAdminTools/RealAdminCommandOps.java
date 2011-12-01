@@ -28,7 +28,7 @@ public class RealAdminCommandOps
 			sender.sendMessage("§a" + bufferOut);
 			reader.close();
 		} catch (Exception e) {
-			plugin.log.severe("Could not read server.properties file");
+			plugin.getLog().severe("Could not read server.properties file");
 			sender.sendMessage("§cCould not read server.properties file");
 		}
 	}

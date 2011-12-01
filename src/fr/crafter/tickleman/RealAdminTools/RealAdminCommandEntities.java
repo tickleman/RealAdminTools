@@ -18,7 +18,7 @@ public class RealAdminCommandEntities
 		String subCommand = args.length > 0 ? args[0].toLowerCase() : "";
 		try {
 			BufferedWriter writer = new BufferedWriter(
-				new FileWriter("plugins/" + plugin.name + "/entities.txt")
+				new FileWriter(plugin.getDataFolder().getPath() + "/entities.txt")
 			);
 			writer.write("#class,id,itemTypeId,world,x,y,z\n");
 			String what = args.length > 1 ? args[1].toLowerCase() : "";
@@ -64,7 +64,7 @@ public class RealAdminCommandEntities
 			writer.flush();
 			writer.close();
 		} catch (Exception e) {
-			plugin.log.severe("Could not save plugins/" + plugin.name + "/entities.txt file");
+			plugin.getLog().severe("Could not save " + plugin.getDataFolder().getPath() + "/entities.txt file");
 		}
 	}
 
