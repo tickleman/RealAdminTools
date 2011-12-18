@@ -1,4 +1,4 @@
-package fr.crafter.tickleman.RealAdminTools;
+package fr.crafter.tickleman.realadmintools;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

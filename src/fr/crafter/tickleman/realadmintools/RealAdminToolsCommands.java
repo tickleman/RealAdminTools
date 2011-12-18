@@ -1,4 +1,4 @@
-package fr.crafter.tickleman.RealAdminTools;
+package fr.crafter.tickleman.realadmintools;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

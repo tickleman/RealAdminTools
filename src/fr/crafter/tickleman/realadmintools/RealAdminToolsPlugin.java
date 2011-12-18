@@ -1,9 +1,9 @@
-package fr.crafter.tickleman.RealAdminTools;
+package fr.crafter.tickleman.realadmintools;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import fr.crafter.tickleman.RealPlugin.RealPlugin;
+import fr.crafter.tickleman.realplugin.RealPlugin;
 
 //############################################################################ RealAdminToolsPlugin
 public class RealAdminToolsPlugin extends RealPlugin

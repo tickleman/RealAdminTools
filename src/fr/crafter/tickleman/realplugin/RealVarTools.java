@@ -1,14 +1,8 @@
-package fr.crafter.tickleman.RealPlugin;
+package fr.crafter.tickleman.realplugin;
 
 //######################################################################################## VarTools
 public class RealVarTools
 {
-
-	//----------------------------------------------------------------------------------------- floor
-	public static Long floor(Double var)
-	{
-		return Math.round(Math.floor(var));
-	}
 
 	//-------------------------------------------------------------------------------------- toString
 	public static Boolean parseBoolean(String string)

@@ -1,6 +1,6 @@
 name: RealAdminTools
-main: fr.crafter.tickleman.RealAdminTools.RealAdminToolsPlugin
-version: 0.1
+main: fr.crafter.tickleman.realadmintools.RealAdminToolsPlugin
+version: 0.11
 website: http://plugins.crafter.fr/tickleman/RealAdminTools/
 authors:
   - tickleman
