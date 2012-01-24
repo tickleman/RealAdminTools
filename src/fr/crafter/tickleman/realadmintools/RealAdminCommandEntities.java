@@ -18,7 +18,7 @@ public class RealAdminCommandEntities
 		String subCommand = args.length > 0 ? args[0].toLowerCase() : "";
 		try {
 			BufferedWriter writer = new BufferedWriter(
-				new FileWriter(plugin.getDataFolder().getPath() + "/entities.txt")
+				new FileWriter(plugin.getDataFolder().getPath() + File.separator + "entities.txt")
 			);
 			writer.write("#class,id,itemTypeId,world,x,y,z\n");
 			String what = args.length > 1 ? args[1].toLowerCase() : "";
