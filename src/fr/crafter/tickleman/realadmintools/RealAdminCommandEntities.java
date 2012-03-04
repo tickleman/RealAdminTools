@@ -1,6 +1,7 @@
 package fr.crafter.tickleman.realadmintools;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 
 import org.bukkit.World;

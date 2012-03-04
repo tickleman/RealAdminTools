@@ -17,6 +17,10 @@ public class RealAdminToolsCommands
 		if ((sender instanceof Player) || (sender instanceof ConsoleCommandSender)) {
 			if (sender instanceof ConsoleCommandSender || ((Player)sender).isOp()) {
 				String command = cmd.getName().toLowerCase();
+				if (command.equals("bench")) {
+					RealAdminCommandBench.command(plugin, sender, args);
+					return true;
+				}
 				if (command.equals("config")) {
 					RealAdminCommandConfig.command(plugin, sender, args);
 					return true;
@@ -31,6 +35,7 @@ public class RealAdminToolsCommands
 				}
 				if (command.equals("tasks")) {
 					RealAdminCommandTasks.command(plugin, sender, args);
+					return true;
 				}
 			}
 		}
