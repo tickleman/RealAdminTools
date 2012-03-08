@@ -22,7 +22,7 @@ public class RealAdminCommandBench
 
 	private static Map<HandlerList, RegisteredListener[]> backupListeners
 		= new HashMap<HandlerList, RegisteredListener[]>();
-
+	private static boolean benchrunning=false;
 	//--------------------------------------------------------------------------------------- command
 	static void command(RealAdminToolsPlugin plugin, CommandSender sender, String[] args)
 	{
@@ -67,6 +67,24 @@ public class RealAdminCommandBench
 				count--;
 			}
 		}
+		if (a[0].equals("top30")) {
+			Map<Long, String> durations = BenchListenerEvent.getSortedDurations();
+			int count = durations.size();
+			for (Long duration : durations.keySet()) {
+				if (count <= 30) {
+					sender.sendMessage(durations.get(duration) + " : " + (duration / 1000000) + "ms");
+				}
+				count--;
+			}
+		}
+		if (a[0].equals("clean")) {
+			if(!benchrunning){
+				BenchListenerEvent.CleanBench();
+				sender.sendMessage("Bench list is clean.");
+			}else{
+				sender.sendMessage("You can't cleaning a benchList, if the bench is started.");
+			}
+		}
 	}
 
 	//------------------------------------------------------------------------------------- isStarted
@@ -103,6 +121,7 @@ public class RealAdminCommandBench
 	@SuppressWarnings("unchecked")
 	static void start(final JavaPlugin plugin)
 	{
+		benchrunning=true;
 		final BenchListener benchListener = new BenchListener();
 		// list all bukkit classes from package org.bukkit.event >
 		Enumeration<? extends ZipEntry> entries = null;
@@ -216,6 +235,7 @@ public class RealAdminCommandBench
 	//------------------------------------------------------------------------------------------ stop
 	static void stop(JavaPlugin plugin)
 	{
+		benchrunning=false;
 		for (HandlerList handlerList : backupListeners.keySet()) {
 			RegisteredListener[] listeners = backupListeners.get(handlerList);
 			//System.out.println("  | restore " + handlerList.hashCode() + " : " + listeners.length);
