@@ -100,7 +100,10 @@ public class BenchListenerEvent extends Event
 		}
 		return sortedDurations;
 	}
-
+	public static void CleanBench(){
+		durations.clear();
+		startTimes.clear();
+	}
 	//--------------------------------------------------------------------------------------- getStep
 	public Called getStep()
 	{
