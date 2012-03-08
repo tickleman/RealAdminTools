@@ -23,6 +23,14 @@ public class RealAdminCommandBench
 	private static Map<HandlerList, RegisteredListener[]> backupListeners
 		= new HashMap<HandlerList, RegisteredListener[]>();
 
+	//----------------------------------------------------------------------------------------- clear
+	static void clear(JavaPlugin plugin)
+	{
+		if (!isStarted()) {
+			BenchListenerEvent.getSortedDurations().clear();
+		}
+	}
+
 	//--------------------------------------------------------------------------------------- command
 	static void command(RealAdminToolsPlugin plugin, CommandSender sender, String[] args)
 	{
@@ -31,20 +39,39 @@ public class RealAdminCommandBench
 		a[1] = args.length > 1 ? args[1] : "";
 		a[2] = args.length > 2 ? args[2] : "";
 		a[3] = args.length > 3 ? args[3] : "";
+		if (a[0].equals("pause")) {
+			if (isStarted()) {
+				pause(plugin);
+				sender.sendMessage("Bench paused !");
+			} else {
+				sender.sendMessage("Bench is not running.");
+			}
+		}
+		if (a[0].equals("resume")) {
+			if (!isStarted()) {
+				resume(plugin);
+				sender.sendMessage("Bench resumed !");
+			} else {
+				sender.sendMessage("Bench is already running.");
+			}
+		}
 		if (a[0].equals("start")) {
 			if (!isStarted()) {
-				start(plugin);
-				sender.sendMessage("Bench started !");
+				clear(plugin);
+				resume(plugin);
+				sender.sendMessage("Bench cleared and started !");
 			} else {
 				sender.sendMessage("Bench is already running.");
 			}
 		}
 		if (a[0].equals("stop")) {
 			if (isStarted()) {
-				stop(plugin);
-				sender.sendMessage("Bench stopped !");
+				pause(plugin);
+				clear(plugin);
+				sender.sendMessage("Bench stopped and cleared !");
 			} else {
-				sender.sendMessage("Bench is not running.");
+				clear(plugin);
+				sender.sendMessage("Bench is not running - bench cleared.");
 			}
 		}
 		if (a[0].equals("top10")) {
@@ -75,6 +102,17 @@ public class RealAdminCommandBench
 		return !backupListeners.isEmpty();
 	}
 
+	//----------------------------------------------------------------------------------------- pause
+	static void pause(JavaPlugin plugin)
+	{
+		for (HandlerList handlerList : backupListeners.keySet()) {
+			RegisteredListener[] listeners = backupListeners.get(handlerList);
+			//System.out.println("  | restore " + handlerList.hashCode() + " : " + listeners.length);
+			setHandlerListRegisteredListeners(handlerList, listeners);
+		}
+		backupListeners.clear();
+	}
+
 	//------------------------------------------------------------- setHandlerListRegisteredListeners
 	private static void setHandlerListRegisteredListeners(
 		HandlerList handlerList, RegisteredListener[] listeners
@@ -99,9 +137,9 @@ public class RealAdminCommandBench
 		if (!isAccessible) handlerListHandlersField.setAccessible(false);
 	}
 
-	//----------------------------------------------------------------------------------------- start
+	//---------------------------------------------------------------------------------------- resume
 	@SuppressWarnings("unchecked")
-	static void start(final JavaPlugin plugin)
+	static void resume(final JavaPlugin plugin)
 	{
 		final BenchListener benchListener = new BenchListener();
 		// list all bukkit classes from package org.bukkit.event >
@@ -211,17 +249,6 @@ public class RealAdminCommandBench
 				}
 			}
 		}
-	}
-
-	//------------------------------------------------------------------------------------------ stop
-	static void stop(JavaPlugin plugin)
-	{
-		for (HandlerList handlerList : backupListeners.keySet()) {
-			RegisteredListener[] listeners = backupListeners.get(handlerList);
-			//System.out.println("  | restore " + handlerList.hashCode() + " : " + listeners.length);
-			setHandlerListRegisteredListeners(handlerList, listeners);
-		}
-		backupListeners.clear();
 	}
 
 }
