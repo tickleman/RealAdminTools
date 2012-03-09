@@ -26,9 +26,7 @@ public class RealAdminCommandBench
 	//----------------------------------------------------------------------------------------- clear
 	static void clear(JavaPlugin plugin)
 	{
-		if (!isStarted()) {
-			BenchListenerEvent.getSortedDurations().clear();
-		}
+		BenchListenerEvent.getSortedDurations().clear();
 	}
 
 	//--------------------------------------------------------------------------------------- command
@@ -39,36 +37,40 @@ public class RealAdminCommandBench
 		a[1] = args.length > 1 ? args[1] : "";
 		a[2] = args.length > 2 ? args[2] : "";
 		a[3] = args.length > 3 ? args[3] : "";
+		if (a[0].equals("clear")) {
+			clear(plugin);
+			sender.sendMessage("Bench cleared.");
+		}
 		if (a[0].equals("pause")) {
 			if (isStarted()) {
 				pause(plugin);
-				sender.sendMessage("Bench paused !");
+				sender.sendMessage("Bench paused.");
 			} else {
-				sender.sendMessage("Bench is not running.");
+				sender.sendMessage("Bench is not running !");
 			}
 		}
 		if (a[0].equals("resume")) {
 			if (!isStarted()) {
 				resume(plugin);
-				sender.sendMessage("Bench resumed !");
+				sender.sendMessage("Bench resumed.");
 			} else {
-				sender.sendMessage("Bench is already running.");
+				sender.sendMessage("Bench is already running !");
 			}
 		}
 		if (a[0].equals("start")) {
 			if (!isStarted()) {
 				clear(plugin);
 				resume(plugin);
-				sender.sendMessage("Bench cleared and started !");
+				sender.sendMessage("Bench cleared and started.");
 			} else {
-				sender.sendMessage("Bench is already running.");
+				sender.sendMessage("Bench is already running !");
 			}
 		}
 		if (a[0].equals("stop")) {
 			if (isStarted()) {
 				pause(plugin);
 				clear(plugin);
-				sender.sendMessage("Bench stopped and cleared !");
+				sender.sendMessage("Bench stopped and cleared.");
 			} else {
 				clear(plugin);
 				sender.sendMessage("Bench is not running - bench cleared.");
@@ -107,7 +109,6 @@ public class RealAdminCommandBench
 	{
 		for (HandlerList handlerList : backupListeners.keySet()) {
 			RegisteredListener[] listeners = backupListeners.get(handlerList);
-			//System.out.println("  | restore " + handlerList.hashCode() + " : " + listeners.length);
 			setHandlerListRegisteredListeners(handlerList, listeners);
 		}
 		backupListeners.clear();
@@ -141,111 +142,96 @@ public class RealAdminCommandBench
 	@SuppressWarnings("unchecked")
 	static void resume(final JavaPlugin plugin)
 	{
-		final BenchListener benchListener = new BenchListener();
-		// list all bukkit classes from package org.bukkit.event >
-		Enumeration<? extends ZipEntry> entries = null;
-		try {
-			entries = new ZipFile("craftbukkit.jar").entries();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		while (entries.hasMoreElements()) {
-			ZipEntry entry = entries.nextElement();
-			if (entry.getName().startsWith("org/bukkit/event") && entry.getName().endsWith(".class")) {
-				// list active listeners for each bukkit event class
-				RegisteredListener[] listeners = null;
-				Class<? extends Event> tmpEventClass = null;
-				try {
-					tmpEventClass = (Class<? extends Event>) Class
-						.forName(entry.getName().replace("/", ".").replace(".class", ""));
-				} catch (ClassNotFoundException e) {
-					System.out.println(entry.getName());
-					e.printStackTrace();
-				}
-				final Class<? extends Event> eventClass = tmpEventClass;
-				HandlerList handlerList = null;
-				Field handlersField = null;
-				try {
-					handlersField = eventClass.getDeclaredField("handlers");
-				} catch (SecurityException e) {
-				} catch (NoSuchFieldException e) {
-				}
-				if (handlersField != null) {
-					boolean isAccessible = handlersField.isAccessible();
-					if (!isAccessible) handlersField.setAccessible(true);
+		if (!isStarted()) {
+			final BenchListener benchListener = new BenchListener();
+			// list all bukkit classes from package org.bukkit.event >
+			Enumeration<? extends ZipEntry> entries = null;
+			try {
+				entries = new ZipFile("craftbukkit.jar").entries();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				if (entry.getName().startsWith("org/bukkit/event") && entry.getName().endsWith(".class")) {
+					// list active listeners for each bukkit event class
+					RegisteredListener[] listeners = null;
+					Class<? extends Event> tmpEventClass = null;
 					try {
-						handlerList = (HandlerList) handlersField.get(null);
-					} catch (NullPointerException e) {
-						// some classes in the event package (HandlerList) have a non-static handlers property
-						// it does not matter. do nothing with them
-					} catch (IllegalArgumentException e) {
-						System.out.println(eventClass.getName());
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						System.out.println(eventClass.getName());
+						tmpEventClass = (Class<? extends Event>) Class
+							.forName(entry.getName().replace("/", ".").replace(".class", ""));
+					} catch (ClassNotFoundException e) {
+						System.out.println(entry.getName());
 						e.printStackTrace();
 					}
-					if (!isAccessible) handlersField.setAccessible(false);
-					if (handlerList != null) {
-						listeners = handlerList.getRegisteredListeners();
+					final Class<? extends Event> eventClass = tmpEventClass;
+					HandlerList handlerList = null;
+					Field handlersField = null;
+					try {
+						handlersField = eventClass.getDeclaredField("handlers");
+					} catch (SecurityException e) {
+					} catch (NoSuchFieldException e) {
 					}
-				}
-				// debug list of listeners >>>
-				/*
-				if (listeners != null) {
-					for (RegisteredListener listener : listeners) {
-						if (listener.getPlugin().isEnabled()) {
-							System.out.println(
-								"# a listener " + listener.getPlugin().getName() + " : "
-								+ eventClass.getSimpleName()
-							);
+					if (handlersField != null) {
+						boolean isAccessible = handlersField.isAccessible();
+						if (!isAccessible) handlersField.setAccessible(true);
+						try {
+							handlerList = (HandlerList) handlersField.get(null);
+						} catch (NullPointerException e) {
+							// some classes in the event package (HandlerList) have a non-static handlers property
+							// it does not matter. do nothing with them
+						} catch (IllegalArgumentException e) {
+							System.out.println(eventClass.getName());
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							System.out.println(eventClass.getName());
+							e.printStackTrace();
+						}
+						if (!isAccessible) handlersField.setAccessible(false);
+						if (handlerList != null) {
+							listeners = handlerList.getRegisteredListeners();
 						}
 					}
-				}
-				*/
-				// assign new listeners list
-				if ((listeners != null) && (listeners.length > 0)) {
-					// create new listeners list
-					RegisteredListener[] newListeners = new RegisteredListener[listeners.length * 3];
-					int di = 0;
-					for (final RegisteredListener listener : listeners) {
-						//System.out.println("+ register before " + listener.getPlugin().getName() + " > " + eventClass.getSimpleName());
-						EventExecutor myExecutor = new EventExecutor() {
-							public void execute(Listener eventListener, Event event) {
-								if (!eventClass.isAssignableFrom(event.getClass())) {
-									return;
+					// assign new listeners list
+					if ((listeners != null) && (listeners.length > 0)) {
+						// create new listeners list
+						RegisteredListener[] newListeners = new RegisteredListener[listeners.length * 3];
+						int di = 0;
+						for (final RegisteredListener listener : listeners) {
+							EventExecutor myExecutor = new EventExecutor() {
+								public void execute(Listener eventListener, Event event) {
+									if (!eventClass.isAssignableFrom(event.getClass())) {
+										return;
+									}
+									BenchListenerEvent benchListenerEvent = new BenchListenerEvent(
+										listener.getPlugin(), listener.getListener(), BenchListenerEvent.Called.BEFORE, event
+									);
+									benchListener.onEvent(benchListenerEvent);
 								}
-								BenchListenerEvent benchListenerEvent = new BenchListenerEvent(
-									listener.getPlugin(), listener.getListener(), BenchListenerEvent.Called.BEFORE, event
-								);
-								benchListener.onEvent(benchListenerEvent);
-							}
-						};
-						newListeners[di++] = new RegisteredListener(
-							benchListener, myExecutor, EventPriority.NORMAL, plugin, true
-						);
-						//System.out.println("+ register origin " + listener.getPlugin().getName() + " > " + eventClass.getSimpleName());
-						newListeners[di++] = listener;
-						//System.out.println("+ register after " + listener.getPlugin().getName() + " > " + eventClass.getSimpleName());
-						myExecutor = new EventExecutor() {
-							public void execute(Listener eventListener, Event event) {
-								if (!eventClass.isAssignableFrom(event.getClass())) {
-									return;
+							};
+							newListeners[di++] = new RegisteredListener(
+								benchListener, myExecutor, EventPriority.NORMAL, plugin, true
+							);
+							newListeners[di++] = listener;
+							myExecutor = new EventExecutor() {
+								public void execute(Listener eventListener, Event event) {
+									if (!eventClass.isAssignableFrom(event.getClass())) {
+										return;
+									}
+									BenchListenerEvent benchListenerEvent = new BenchListenerEvent(
+										listener.getPlugin(), listener.getListener(), BenchListenerEvent.Called.AFTER, event
+									);
+									benchListener.onEvent(benchListenerEvent);
 								}
-								BenchListenerEvent benchListenerEvent = new BenchListenerEvent(
-									listener.getPlugin(), listener.getListener(), BenchListenerEvent.Called.AFTER, event
-								);
-								benchListener.onEvent(benchListenerEvent);
-							}
-						};
-						newListeners[di++] = new RegisteredListener(
-							benchListener, myExecutor, EventPriority.NORMAL, plugin, true
-						);
+							};
+							newListeners[di++] = new RegisteredListener(
+								benchListener, myExecutor, EventPriority.NORMAL, plugin, true
+							);
+						}
+						// set event handler registered listeners list = newListeners
+						backupListeners.put(handlerList, listeners);
+						setHandlerListRegisteredListeners(handlerList, newListeners);
 					}
-					// set event handler registered listeners list = newListeners
-					//System.out.println("  | backup " + handlerList.hashCode() + " : " + listeners.length);
-					backupListeners.put(handlerList, listeners);
-					setHandlerListRegisteredListeners(handlerList, newListeners);
 				}
 			}
 		}
