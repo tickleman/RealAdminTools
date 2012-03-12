@@ -1,6 +1,6 @@
 name: RealAdminTools
 main: fr.crafter.tickleman.realadmintools.RealAdminToolsPlugin
-version: 0.31
+version: 0.32
 website: http://plugins.crafter.fr/tickleman/RealAdminTools/
 author: tickleman
 depend: [RealPlugin]
@@ -8,6 +8,9 @@ commands:
   bench:
     description: benchmark and plugin events debugging process
     usage: /<command>
+  commands:
+    description: display a list of commands that collapse
+    usage: /<command> [<all>]
   config:
     description: change configuration options from server.properties
     usage: /<command> [<option> [<value>]]

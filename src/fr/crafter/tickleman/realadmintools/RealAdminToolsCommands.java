@@ -21,6 +21,10 @@ public class RealAdminToolsCommands
 					RealAdminCommandBench.command(plugin, sender, args);
 					return true;
 				}
+				if (command.equals("commands")) {
+					RealAdminCommandCommands.command(plugin, sender, args);
+					return true;
+				}
 				if (command.equals("config")) {
 					RealAdminCommandConfig.command(plugin, sender, args);
 					return true;
