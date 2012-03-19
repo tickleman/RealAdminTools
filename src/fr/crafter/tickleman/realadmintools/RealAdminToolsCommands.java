@@ -37,6 +37,9 @@ public class RealAdminToolsCommands
 					RealAdminCommandOps.command(plugin, sender, args);
 					return true;
 				}
+				if (command.equals("qt")) {
+					return RealAdminCommandQt.command(plugin, sender, args);
+				}
 				if (command.equals("tasks")) {
 					RealAdminCommandTasks.command(plugin, sender, args);
 					return true;

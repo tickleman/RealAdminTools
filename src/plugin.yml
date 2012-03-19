@@ -1,6 +1,6 @@
 name: RealAdminTools
 main: fr.crafter.tickleman.realadmintools.RealAdminToolsPlugin
-version: 0.32
+version: 0.33
 website: http://plugins.crafter.fr/tickleman/RealAdminTools/
 author: tickleman
 depend: [RealPlugin]
@@ -20,6 +20,9 @@ commands:
   ops:
     description: display operators list
     usage: /<command>
+  qt:
+    description: quick teleporter
+    usage: /qt x z | /qt x y z
   tasks:
     description: display tasks list
     usage: /<command>
