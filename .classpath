@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Minespace/libraries/bukkit.jar" sourcepath="/Bukkit"/>
 	<classpathentry kind="lib" path="C:/Minespace/libraries/Permissions.jar"/>
 	<classpathentry kind="lib" path="C:/Minespace/libraries/RealPlugin.jar"/>
+	<classpathentry kind="lib" path="C:/Minespace/libraries/craftbukkit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
