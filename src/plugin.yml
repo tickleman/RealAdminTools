@@ -1,6 +1,6 @@
 name: RealAdminTools
 main: fr.crafter.tickleman.realadmintools.RealAdminToolsPlugin
-version: 0.33
+version: 0.34
 website: http://plugins.crafter.fr/tickleman/RealAdminTools/
 author: tickleman
 depend: [RealPlugin]

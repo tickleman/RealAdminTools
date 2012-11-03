@@ -17,13 +17,13 @@ public class RealAdminCommandQt
 				player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ()
 			);
 			if (args.length == 2) {
-				location.setX(new Double(args[0]));
-				location.setZ(new Double(args[1]));
-				location.setY(player.getWorld().getHighestBlockAt(location).getY());
+				location.setX(.5 + new Double(args[0]));
+				location.setZ(.5 + new Double(args[1]));
+				location.setY(.1 + player.getWorld().getHighestBlockAt(location).getY());
 			} else if (args.length == 3) {
-				location.setX(new Double(args[0]));
-				location.setY(new Double(args[1]));
-				location.setZ(new Double(args[2]));
+				location.setX(.5 + new Double(args[0]));
+				location.setY(.1 + new Double(args[1]));
+				location.setZ(.5 + new Double(args[2]));
 			} else {
 				return false;
 			}
